@@ -12,6 +12,7 @@ const router = createRouter({
       component: AuthLayout,
       children: [{
         path: '',
+        name: 'login',
         component: () => import("@/views/LoginView.vue")
       }]
     },
@@ -21,6 +22,7 @@ const router = createRouter({
       component: DashboardLayout,
       children: [{
         path: '',
+        name: 'home',
         component: HomeView
       }]
     },
@@ -30,11 +32,9 @@ const router = createRouter({
       component: DashboardLayout,
       children: [{
         path: '',
+        name: 'home',
         component: () => import('../views/AboutView.vue')
       }]
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       
     }
   ]
