@@ -17,7 +17,7 @@ export default {
         async signIn({ dispatch }, credential){
             let res = await axios.post('v1/auth/login', credential)
             //console.log(res.data)
-            dispatch("attempt",res.data.accessToken)
+            await dispatch("attempt",res.data.accessToken)
         },
         async attempt({ commit }, token){
             commit('SET_TOKEN', token)
