@@ -9,6 +9,7 @@ import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 
+import '@/store/subscriber';
 
 
 axios.defaults.baseURL = "http://localhost:8001/api"

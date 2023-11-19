@@ -17,8 +17,18 @@ const router = createRouter({
       }]
     },
     {
+      path: '/registration',
+      name: 'registration',
+      component: AuthLayout,
+      children: [{
+        path: '',
+        name: 'registration',
+        component: () => import("@/views/RegistrationView.vue")
+      }]
+    },
+    {
       path: '/home',
-      name: 'home',
+      name: 'dashboardLayout',
       component: DashboardLayout,
       children: [{
         path: '',
@@ -32,7 +42,7 @@ const router = createRouter({
       component: DashboardLayout,
       children: [{
         path: '',
-        name: 'home',
+        name: 'about',
         component: () => import('../views/AboutView.vue')
       }]
       

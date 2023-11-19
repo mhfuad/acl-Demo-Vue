@@ -30,6 +30,8 @@
 
         <b-button type="submit" variant="primary">Login</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
+
+        <p>Don't have Account? </p><RouterLink to="/registration">Registration</RouterLink>
       </b-form>
     </b-card>
   </div>
@@ -49,16 +51,28 @@
       }
     },
     methods: {
-      ...mapActions('auth', ['signIn']),
+      ...mapActions('auth', ['signIn','attempt']),
+
       onSubmit(event) {
+
         event.preventDefault()
-        this.$store.dispatch('auth/signIn', this.form);
+
+        this.$store.dispatch('auth/signIn', this.form)
+        .then(()=>{
+          this.$router.replace({
+            name: 'home'
+          })
+        })
+        .catch((err)=>{
+          alert(err)
+        });
       },
+
       onReset(event) {
         event.preventDefault()
-        this.form.email = ''
-        this.form.password = ''
-        this.$nextTick(() => {
+          this.form.email = ''
+          this.form.password = ''
+          this.$nextTick(() => {
         })
       }
     }
