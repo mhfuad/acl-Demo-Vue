@@ -7,7 +7,9 @@
 
             <nav>
                 <RouterLink to="/home">Home</RouterLink> | 
-                <RouterLink to="/about">About</RouterLink>
+                <RouterLink to="/about">About</RouterLink> | 
+                {{ user }} |
+                <a href="" @click.prevent="signOut">Sign out</a>
             </nav>
             </div>
         </header>
@@ -15,3 +17,27 @@
         <footer>Acl demo</footer>
     </div>
 </template>
+<script>
+    import { mapGetters, mapActions } from 'vuex';
+    export default {
+        computed: {
+            ...mapGetters({
+                authenticated: 'auth/authenticated',
+                user: 'auth/user'
+            })
+        },
+        methods: {
+            ...mapActions({
+                signOutAction: 'auth/signOut'
+            }),
+
+            signOut(){
+                this.signOutAction().then(()=>{
+                    this.$router.replace({
+                        name: 'login'
+                    })
+                })
+            }
+        }
+    }
+</script>

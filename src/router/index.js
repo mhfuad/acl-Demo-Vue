@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import DashboardLayout from '../layouts/DashboardLayout.vue'
 import HomeView from '../views/HomeView.vue'
+import store from '@/store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'loginLayout',
       component: AuthLayout,
       children: [{
         path: '',
@@ -34,7 +35,15 @@ const router = createRouter({
         path: '',
         name: 'home',
         component: HomeView
-      }]
+      }],
+      beforeEnter: (to, from, next) => {
+        if(!store.getters['auth/authenticated']){
+          return next({
+            name: 'login'
+          })
+        }
+        next()
+      }
     },
     {
       path: '/about',
@@ -44,8 +53,15 @@ const router = createRouter({
         path: '',
         name: 'about',
         component: () => import('../views/AboutView.vue')
-      }]
-      
+      }],
+      beforeEnter: (to, from, next) => {
+        if(!store.getters['auth/authenticated']){
+          return next({
+            name: 'login'
+          })
+        }
+        next()
+      }
     }
   ]
 })

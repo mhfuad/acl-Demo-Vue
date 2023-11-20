@@ -58,7 +58,7 @@
         event.preventDefault()
 
         this.$store.dispatch('auth/signIn', this.form)
-        .then(()=>{
+        .then((res)=>{
           this.$router.replace({
             name: 'home'
           })

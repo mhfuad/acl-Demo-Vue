@@ -13,11 +13,15 @@ import '@/store/subscriber';
 
 
 axios.defaults.baseURL = "http://localhost:8001/api"
+store.dispatch('auth/attempt', localStorage.getItem('token'))
+.then(()=>{
+    const app = createApp(App)
 
-const app = createApp(App)
+    app.use(router)
+    app.use(BootstrapVue3)
+    app.use(store)
 
-app.use(router)
-app.use(BootstrapVue3)
-app.use(store)
+    app.mount('#app')
+})
 
-app.mount('#app')
+

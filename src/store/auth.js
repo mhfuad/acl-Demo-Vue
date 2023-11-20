@@ -24,21 +24,34 @@ export default {
     actions: {
         async signIn({ dispatch, commit }, credential){
             let res = await axios.post('v1/auth/login', credential)
-            //console.log(res.data)
-            await dispatch("attempt",res.data.accessToken)
+            return dispatch("attempt",res.data.accessToken)
         },
         
-        async attempt({ commit }, token){
-            commit('SET_TOKEN', token)
+        async attempt({ commit, state }, token){
+            
+            if(token){
+                commit('SET_TOKEN', token)
+            }
+
+            if(!state.token){
+                return
+            }
+
             try {
                 let res = await axios.get('v1/auth/me')
                 commit('SET_USER', res.data)
             } catch (error) {
                 commit('SET_TOKEN', null)
                 commit('SET_USER', null)
-                console.log("faild"+error)
             }
-        }
+        },
 
+        signOut ({commit}){
+            return axios.post('v1/auth/logout')
+            .then(()=>{
+                commit('SET_TOKEN', null)
+                commit('SET_USER', null)
+            })
+        }
     }
 }
