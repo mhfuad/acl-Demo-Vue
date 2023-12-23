@@ -15,7 +15,15 @@ const router = createRouter({
         path: '',
         name: 'login',
         component: () => import("@/views/LoginView.vue")
-      }]
+      }],
+      beforeEnter: (to, from, next) => {
+        if(store.getters['auth/authenticated']){
+          return next({
+            name: 'home'
+          })
+        }
+        next()
+      }
     },
     {
       path: '/registration',
@@ -62,7 +70,44 @@ const router = createRouter({
         }
         next()
       }
+    },
+    {
+      path: '/student',
+      name: 'student',
+      component: DashboardLayout,
+      children: [{
+        path: '',
+        name: 'index',
+        component: () => import('../views/student/indexView.vue')
+      }],
+      beforeEnter: (to, from, next) => {
+        if(!store.getters['auth/authenticated']){
+          return next({
+            name: 'login'
+          })
+        }
+        next()
+      }
+    },
+    {
+      path: '/student-create',
+      name: 'student-create',
+      component: DashboardLayout,
+      children: [{
+        path: '',
+        name: 'create',
+        component: () => import('../views/student/createView.vue')
+      }],
+      beforeEnter: (to, from, next) => {
+        if(!store.getters['auth/authenticated']){
+          return next({
+            name: 'login'
+          })
+        }
+        next()
+      }
     }
+
   ]
 })
 
